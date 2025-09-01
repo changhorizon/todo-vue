@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
+import TodoList from './TodoList.vue'
 
 const newTodo = ref('')
 const todos = ref([
@@ -47,17 +48,8 @@ if (saved) {
   <input v-model="newTodo" placeholder="请输入任务" />
   <button @click="addTodo">添加</button>
 
-  <ul>
-    <li
-      v-for="(todo, index) in todos"
-      :key="index"
-      :style="{ textDecoration: todo.done ? 'line-through' : 'none' }"
-    >
-      <input type="checkbox" :checked="todo.done" @change="toggleTodo(index)" />
-      {{ todo.text }}
-      <button @click="removeTodo(index)">删除</button>
-    </li>
-  </ul>
+  <TodoList :todos="todos" @toggle="toggleTodo" @remove="removeTodo" />
+
   <p>还有{{ remaining }}个任务未完成</p>
 </template>
 
