@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const newTodo = ref('')
 const todos = ref([
@@ -24,6 +24,21 @@ const toggleTodo = (index) => {
 
 // 计算属性
 const remaining = computed(() => todos.value.filter((t) => !t.done).length)
+
+// 监听 todos 的变化
+watch(
+  todos,
+  (newValue) => {
+    localStorage.setItem('todos', JSON.stringify(newValue))
+  },
+  { deep: true }, // 因为 todos 是数组对象，需要深度监听
+)
+
+// 初始化时读取本地数据
+const saved = localStorage.getItem('todos')
+if (saved) {
+  todos.value = JSON.parse(saved)
+}
 </script>
 
 <template>
