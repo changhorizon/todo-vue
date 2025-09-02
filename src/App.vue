@@ -1,14 +1,18 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import TodoList from './TodoList.vue'
 
 const newTodo = ref('')
 const todos = ref([])
 
+// 引用输入框 DOM
+const inputRef = ref(null)
+
 const addTodo = () => {
   if (newTodo.value.trim() !== '') {
     todos.value.push({ text: newTodo.value, done: false })
     newTodo.value = ''
+    inputRef.value.focus() // 添加任务后自动聚焦
   }
 }
 
@@ -24,6 +28,11 @@ const toggleTodo = (index) => {
 
 // 计算属性：未完成任务数
 const remaining = computed(() => todos.value.filter((t) => !t.done).length)
+
+// 第一次渲染完成后也让输入框聚焦
+onMounted(() => {
+  inputRef.value.focus()
+})
 
 // 监听 todos 保存到本地
 watch(
@@ -45,7 +54,7 @@ if (saved) {
   <div class="todo-app">
     <h1>Todo List</h1>
 
-    <input v-model="newTodo" placeholder="请输入任务" />
+    <input v-model="newTodo" placeholder="请输入任务" ref="inputRef" />
     <button @click="addTodo">添加</button>
 
     <TodoList :todos="todos" @toggle="toggleTodo" @remove="removeTodo" />
