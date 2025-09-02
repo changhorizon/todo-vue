@@ -3,7 +3,7 @@ import { defineProps, defineEmits } from 'vue'
 import TodoItem from './TodoItem.vue'
 
 // 父组件传来的 props
-const props = defineProps({
+const { todos } = defineProps({
   todos: Array,
 })
 
@@ -12,7 +12,9 @@ const emit = defineEmits(['toggle', 'remove'])
 </script>
 
 <template>
-  <ul>
+  <!-- 条件渲染：空状态 -->
+  <p v-if="!todos || todos.length === 0">暂无任务，请添加一个吧！</p>
+  <ul v-else>
     <TodoItem
       v-for="(todo, index) in todos"
       :key="index"

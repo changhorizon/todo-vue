@@ -10,7 +10,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle', 'remove'])
 
 // 子组件要触发的事件
-const toggle = () => {
+const onToggle = () => {
   emit('toggle', props.index)
 }
 
@@ -20,9 +20,16 @@ const onRemove = () => {
 </script>
 
 <template>
-  <li :style="{ textDecoration: todo.done ? 'line-through' : 'none' }">
-    <input type="checkbox" :checked="todo.done" @change="toggle" />
+  <li :class="{ done: todo.done }">
+    <input type="checkbox" :checked="todo.done" @change="onToggle" />
     {{ todo.text }}
     <button @click="onRemove">删除</button>
   </li>
 </template>
+
+<style scoped>
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+</style>
