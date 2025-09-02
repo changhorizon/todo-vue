@@ -1,0 +1,73 @@
+/* ==============================
+   全局变量 & 核心样式（亮色主题默认）
+============================== */
+:root {
+  /* 主要色彩 */
+  --color-primary: #1e90ff; /* 主色改为亮蓝色 */
+  --color-primary-hover: #187bcd; /* hover 色调稍深 */
+  --color-secondary: #f0f0f0;
+  --color-text: #333;
+  --color-text-muted: #666;
+  --color-bg: #f9f9f9;
+  --color-bg-list: #fff;
+  --color-header: #1e90ff; /* 头部背景使用主色 */
+  --color-input: #fff;
+  --color-border: #ccc;
+  --color-danger: #f56c6c;
+  --color-danger-hover: #d94a4a;
+  --color-filter-text: #333; /* 白天非激活文字颜色 */
+  --color-filter-text-hover: #555; /* 白天非激活悬停文字 */
+
+  /* 样式变量 */
+  --border-radius: 3px;
+  --gap: 8px;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ==============================
+   暗色主题
+   在 body 或 todo-app 上添加 class dark-theme 即可
+============================== */
+.dark-theme {
+  --color-primary: #1e90ff; /* 夜间主色仍为蓝色调 */
+  --color-primary-hover: #187bcd;
+  --color-secondary: #3a3a3a;
+  --color-text: #eee;
+  --color-text-muted: #aaa;
+  --color-bg: #1e1e1e;
+  --color-bg-list: #2a2a2a;
+  --color-header: #187bcd; /* 夜间头部稍深 */
+  --color-input: #333;
+  --color-border: #555;
+  --color-danger: #f56c6c;
+  --color-danger-hover: #d94a4a;
+  --color-filter-text: #ccc; /* 夜间非激活文字颜色 */
+  --color-filter-text-hover: #fff; /* 夜间非激活悬停文字 */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+button {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
