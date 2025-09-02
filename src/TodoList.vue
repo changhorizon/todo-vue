@@ -8,7 +8,7 @@ const { todos } = defineProps({
 })
 
 // 父组件事件透传
-const emit = defineEmits(['toggle', 'remove'])
+const emit = defineEmits(['toggle', 'remove', 'clearCompleted'])
 </script>
 
 <template>
@@ -24,4 +24,6 @@ const emit = defineEmits(['toggle', 'remove'])
       @remove="emit('remove', $event)"
     />
   </ul>
+
+  <button v-if="todos.some((t) => t.done)" @click="emit('clearCompleted')">清空已完成任务</button>
 </template>

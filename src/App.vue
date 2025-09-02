@@ -26,6 +26,10 @@ const toggleTodo = (index) => {
   todos.value[index].done = !todos.value[index].done
 }
 
+const clearCompleted = () => {
+  todos.value = todos.value.filter((t) => !t.done)
+}
+
 // 计算属性：未完成任务数
 const remaining = computed(() => todos.value.filter((t) => !t.done).length)
 
@@ -57,7 +61,12 @@ if (saved) {
     <input v-model="newTodo" placeholder="请输入任务" ref="inputRef" />
     <button @click="addTodo">添加</button>
 
-    <TodoList :todos="todos" @toggle="toggleTodo" @remove="removeTodo" />
+    <TodoList
+      :todos="todos"
+      @toggle="toggleTodo"
+      @remove="removeTodo"
+      @clearCompleted="clearCompleted"
+    />
 
     <p>还有{{ remaining }}个任务未完成</p>
   </div>
