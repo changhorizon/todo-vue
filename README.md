@@ -1,6 +1,6 @@
 # todo-list
 
-This template should help get you started developing with Vue 3 in Vite.
+一个基于 Vue 3 和 Composition API 的响应式 Todo List 应用，支持添加、删除、完成/未完成切换、任务筛选（全部/未完成/已完成）、清空已完成任务、主题切换（暗黑/亮色模式）以及本地存储持久化，兼顾桌面与移动端友好布局和交互体验。
 
 ## Recommended IDE Setup
 
