@@ -88,7 +88,7 @@ watch(
     <header class="header">
       <h1>Todo List</h1>
       <button class="theme-toggle" @click="isDark = !isDark">
-        {{ isDark ? '🌙' : '☀️' }}
+        {{ isDark ? '☀️' : '🌙' }}
       </button>
     </header>
 

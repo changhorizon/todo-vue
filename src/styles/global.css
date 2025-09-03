@@ -44,6 +44,10 @@
   --color-danger-hover: #d94a4a;
   --color-filter-text: #ccc; /* 夜间非激活文字颜色 */
   --color-filter-text-hover: #fff; /* 夜间非激活悬停文字 */
+
+  /* 新增暗色专属阴影 */
+  --shadow-light: 0 1px 3px rgba(255, 255, 255, 0.08);
+  --shadow-medium: 0 2px 8px rgba(255, 255, 255, 0.12);
 }
 
 *,
