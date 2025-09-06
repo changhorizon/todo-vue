@@ -2,7 +2,7 @@
 // ================================
 // 导入 Vue 提供的 API 与子组件
 // ================================
-import { defineProps, defineEmits, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import TodoItem from './TodoItem.vue'
 
 // ================================
