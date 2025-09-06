@@ -1,40 +1,57 @@
 <script setup>
+// ================================
+// 导入 Vue 提供的组合式 API
+// ================================
 import { ref, onMounted, computed, watch } from 'vue'
 import TodoList from './components/TodoList.vue'
 
-const newTodo = ref('')
-const todos = ref([])
-const filter = ref('all')
-const isError = ref(false)
-const inputRef = ref(null)
+// ================================
+// 响应式数据
+// ================================
+const newTodo = ref('') // 输入框的文本
+const todos = ref([]) // 存储任务数组
+const filter = ref('all') // 当前过滤状态：all / active / completed
+const isError = ref(false) // 输入错误状态（空文本时触发抖动）
+const inputRef = ref(null) // 输入框 DOM 引用，用于聚焦
 
+// ================================
+// 任务操作方法
+// ================================
 const addTodo = () => {
   if (newTodo.value.trim() === '') {
     inputRef.value.focus()
     isError.value = true
-    setTimeout(() => {
-      isError.value = false
-    }, 200)
+    setTimeout(() => (isError.value = false), 200)
     return
   }
-  isError.value = false
-  todos.value.push({ text: newTodo.value, done: false })
+  todos.value.push({
+    id: Date.now(),
+    text: newTodo.value,
+    done: false,
+  })
   newTodo.value = ''
   inputRef.value.focus()
 }
 
-const removeTodo = (index) => {
-  todos.value.splice(index, 1)
+const removeTodo = (todo) => {
+  todos.value = todos.value.filter((t) => t.id !== todo.id)
 }
 
-const toggleTodo = (index) => {
-  todos.value[index].done = !todos.value[index].done
+const toggleTodo = (todo) => {
+  todo.done = !todo.done
+}
+
+const updateTodo = (updated) => {
+  todos.value = todos.value.map((t) => (t.id === updated.id ? updated : t))
 }
 
 const clearCompleted = () => {
   todos.value = todos.value.filter((t) => !t.done)
 }
 
+// ================================
+// 计算属性
+// ================================
 const remaining = computed(() => todos.value.filter((t) => !t.done).length)
 const hasCompleted = computed(() => todos.value.some((t) => t.done))
 
@@ -45,34 +62,27 @@ const filteredTodos = computed(() => {
   return list
 })
 
-// 从 localStorage 里取主题
+// ================================
+// 主题功能
+// ================================
 const isDark = ref(localStorage.getItem('isDark') === 'true')
-
-// 封装一个函数，专门负责应用主题和保存
 const applyTheme = (dark) => {
-  if (dark) {
-    document.body.classList.add('dark-theme')
-  } else {
-    document.body.classList.remove('dark-theme')
-  }
-  localStorage.setItem('isDark', dark) // 保存到 localStorage
+  document.body.classList.toggle('dark-theme', dark)
+  localStorage.setItem('isDark', dark)
 }
 
 onMounted(() => {
   inputRef.value.focus()
-
-  // 页面加载时，执行一次初始化
   applyTheme(isDark.value)
 })
 
-watch(isDark, (val) => {
-  applyTheme(val)
-})
+watch(isDark, (val) => applyTheme(val))
 
+// ================================
+// 本地存储 todos
+// ================================
 const saved = localStorage.getItem('todos')
-if (saved) {
-  todos.value = JSON.parse(saved)
-}
+if (saved) todos.value = JSON.parse(saved)
 
 watch(
   todos,
@@ -84,7 +94,9 @@ watch(
 </script>
 
 <template>
+  <!-- 主容器 -->
   <div class="todo-app">
+    <!-- 头部：标题 + 主题切换 -->
     <header class="header">
       <h1>Todo List</h1>
       <button class="theme-toggle" @click="isDark = !isDark">
@@ -92,6 +104,7 @@ watch(
       </button>
     </header>
 
+    <!-- 筛选按钮 -->
     <section class="filters">
       <button @click="filter = 'all'" :class="{ active: filter === 'all' }">全部</button>
       <button @click="filter = 'active'" :class="{ active: filter === 'active' }">未完成</button>
@@ -100,17 +113,18 @@ watch(
       </button>
     </section>
 
+    <!-- 任务列表和底部信息 -->
     <div class="list-container">
       <TodoList
         :todos="filteredTodos"
         @toggle="toggleTodo"
         @remove="removeTodo"
-        @clearCompleted="clearCompleted"
+        @update="updateTodo"
       />
       <footer class="footer">
-        <span v-if="filter !== 'completed'" class="remaining"
-          >还有 {{ remaining }} 个任务未完成</span
-        >
+        <span v-if="filter !== 'completed'" class="remaining">
+          还有 {{ remaining }} 个任务未完成
+        </span>
         <span v-else></span>
         <button
           v-if="hasCompleted && filter !== 'active'"
@@ -122,12 +136,14 @@ watch(
       </footer>
     </div>
 
+    <!-- 底部输入区 -->
     <section class="todo-input">
       <input
         v-model="newTodo"
         :class="{ 'input-error': isError }"
         placeholder="请输入任务"
         ref="inputRef"
+        @keyup.enter="addTodo"
       />
       <button @click="addTodo">添加</button>
     </section>
