@@ -1,34 +1,42 @@
-# Todo List with Vue
+# Todo Vue
 
-一个基于 Vue 3 和 Composition API 的响应式 Todo List 应用，支持添加、删除、完成/未完成切换、任务筛选（全部/未完成/已完成）、清空已完成任务、主题切换（暗黑/亮色模式）以及本地存储持久化，兼顾桌面与移动端友好布局和交互体验。
+A lightweight and responsive Todo application built with **Vue 3** and the **Composition API**.
+This project focuses on clean state management, component-based architecture, and a smooth user experience across desktop and mobile devices.
 
-## Recommended IDE Setup
+> This repository is intended as a **foundational Vue example project**, showcasing modern Vue 3 development practices.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## ✨ Features
 
-## Customize configuration
+- Add, edit, and delete tasks
+- Toggle task status (completed / active)
+- Filter tasks:
+  - All
+  - Active
+  - Completed
+- Clear completed tasks
+- Light / Dark theme toggle
+- Persistent data storage using **localStorage**
+- Responsive layout for desktop and mobile
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Production
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint
 
 ```sh
 npm run lint
